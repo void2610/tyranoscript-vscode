@@ -2,7 +2,7 @@
   "name": "tyranoscript",
   "displayName": "TyranoScript",
   "description": "TyranoScript (.ks) 言語サポート（補完・ホバー・定義ジャンプ・診断）",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "void2610",
   "license": "MIT",
   "repository": {
