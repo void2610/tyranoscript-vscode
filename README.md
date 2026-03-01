@@ -1,5 +1,7 @@
 # TyranoScript for Visual Studio Code
 
+[日本語](README.ja.md)
+
 VSCode extension for [TyranoScript](https://tyranoscript.jp/) (`.ks` files).
 
 ## Features
