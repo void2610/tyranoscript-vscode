@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "TyranoScript",
+  "scopeName": "source.tyranoscript",
+  "fileTypes": ["ks"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#label" },
+    { "include": "#bracket-tag" },
+    { "include": "#at-tag" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.semicolon.tyranoscript",
+      "match": ";.*$"
+    },
+    "label": {
+      "name": "entity.name.section.tyranoscript",
+      "match": "^\\*\\w+"
+    },
+    "bracket-tag": {
+      "name": "meta.tag.bracket.tyranoscript",
+      "begin": "\\[",
+      "end": "\\]",
+      "patterns": [
+        {
+          "name": "entity.name.function.tyranoscript",
+          "match": "(?<=\\[)[a-zA-Z_]\\w*"
+        },
+        {
+          "name": "variable.other.tyranoscript",
+          "match": "\\w+(?=\\s*=)"
+        },
+        {
+          "name": "string.quoted.double.tyranoscript",
+          "begin": "\"",
+          "end": "\""
+        }
+      ]
+    },
+    "at-tag": {
+      "name": "keyword.control.tyranoscript",
+      "match": "^@[a-zA-Z_]\\w*"
+    }
+  }
+}

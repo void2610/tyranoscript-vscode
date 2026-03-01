@@ -1,0 +1,71 @@
+{
+  "name": "tyranoscript",
+  "displayName": "TyranoScript",
+  "description": "TyranoScript (.ks) 言語サポート（補完・ホバー・定義ジャンプ・診断）",
+  "version": "0.1.0",
+  "publisher": "void2610",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/void2610/tyranoscript-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/void2610/tyranoscript-vscode/issues"
+  },
+  "homepage": "https://github.com/void2610/tyranoscript-vscode",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "tyranoscript",
+    "ks",
+    "tyrano",
+    "visual novel",
+    "language server"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "tyranoscript",
+        "aliases": [
+          "TyranoScript",
+          "tyranoscript"
+        ],
+        "extensions": [
+          ".ks"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tyranoscript",
+        "scopeName": "source.tyranoscript",
+        "path": "./syntaxes/tyranoscript.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1",
+    "@void2610/tyranoscript-lsp": "^0.6.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.0.0"
+  }
+}
