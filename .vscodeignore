@@ -3,7 +3,8 @@ tsconfig.json
 src/**
 .vscode/**
 .vscode-test/**
-*.map
+**/*.map
+dist/test/**
 CLAUDE.md
 sample.ks
 package-lock.json
