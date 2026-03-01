@@ -2,4 +2,8 @@ esbuild.mjs
 tsconfig.json
 src/**
 .vscode/**
+.vscode-test/**
 *.map
+CLAUDE.md
+sample.ks
+package-lock.json

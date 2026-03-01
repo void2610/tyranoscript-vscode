@@ -4,43 +4,130 @@
   "scopeName": "source.tyranoscript",
   "fileTypes": ["ks"],
   "patterns": [
+    { "include": "#script-block" },
     { "include": "#comment" },
     { "include": "#label" },
+    { "include": "#speaker" },
     { "include": "#bracket-tag" },
     { "include": "#at-tag" }
   ],
   "repository": {
+
     "comment": {
       "name": "comment.line.semicolon.tyranoscript",
       "match": ";.*$"
     },
+
     "label": {
       "name": "entity.name.section.tyranoscript",
-      "match": "^\\*\\w+"
+      "match": "^\\*\\S+"
     },
-    "bracket-tag": {
-      "name": "meta.tag.bracket.tyranoscript",
-      "begin": "\\[",
-      "end": "\\]",
+
+    "speaker": {
+      "comment": "話者行: # と話者名を同じ色にする",
+      "name": "entity.name.tag.tyranoscript",
+      "match": "^#.*$"
+    },
+
+    "script-block": {
+      "comment": "VSCode標準HTMLグラマーの<script>ブロックと同じ構造：内側ルールで name:source.js をスタックに追加する",
+      "begin": "\\[iscript[\\]]",
+      "end": "^\\s*\\[endscript[\\]]\\s*$",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.tyranoscript" }
+      },
+      "endCaptures": {
+        "0": { "name": "keyword.control.tyranoscript" }
+      },
       "patterns": [
         {
-          "name": "entity.name.function.tyranoscript",
-          "match": "(?<=\\[)[a-zA-Z_]\\w*"
-        },
-        {
-          "name": "variable.other.tyranoscript",
-          "match": "\\w+(?=\\s*=)"
-        },
-        {
-          "name": "string.quoted.double.tyranoscript",
-          "begin": "\"",
-          "end": "\""
+          "comment": "contentName を使わず直接 source.js を name に設定: meta.embedded スコープによるテーマ上書きを回避する",
+          "begin": "\\G",
+          "end": "^(?=\\s*\\[endscript)",
+          "name": "source.js",
+          "patterns": [
+            { "include": "source.js" }
+          ]
         }
       ]
     },
+
+    "bracket-tag": {
+      "comment": "[tag attr=val]: begin/end で begin:\\[ を使い \\G でタグ名を確定する",
+      "name": "meta.tag.tyranoscript",
+      "begin": "\\[(?!iscript|endscript)",
+      "end": "\\]|$",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.tag.begin.tyranoscript" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.tag.end.tyranoscript" }
+      },
+      "patterns": [
+        {
+          "comment": "\\G: [ の直後だけ制御フローキーワードに合致",
+          "name": "keyword.control.tyranoscript",
+          "match": "\\G(?:if|elsif|else|endif|macro|endmacro|jump|call|return|s|for|endfor|while|endwhile|break|continue|l|p|r|er|ct|cm|wd|wait)\\b"
+        },
+        {
+          "comment": "\\G: [ の直後だけ一般タグ名に合致",
+          "name": "entity.name.tag.tyranoscript",
+          "match": "\\G[a-zA-Z_]\\w*"
+        },
+        { "include": "#attribute" },
+        { "include": "#comment" }
+      ]
+    },
+
     "at-tag": {
-      "name": "keyword.control.tyranoscript",
-      "match": "^@[a-zA-Z_]\\w*"
+      "comment": "@tag attr=val: match + capture 内 patterns でタグ名をスコープ付け",
+      "match": "^(@)(.*)",
+      "captures": {
+        "1": { "name": "keyword.control.tyranoscript" },
+        "2": {
+          "patterns": [
+            {
+              "name": "keyword.control.tyranoscript",
+              "match": "^(?:if|elsif|else|endif|macro|endmacro|jump|call|return|s|for|endfor|while|endwhile|break|continue|l|p|r|er|ct|cm|wd|wait)\\b"
+            },
+            {
+              "name": "entity.name.tag.tyranoscript",
+              "match": "^[a-zA-Z_]\\w*"
+            },
+            { "include": "#attribute" },
+            { "include": "#comment" }
+          ]
+        }
+      }
+    },
+
+    "attribute": {
+      "patterns": [
+        {
+          "comment": "name=\"value\" 形式",
+          "match": "([a-zA-Z_]\\w*)\\s*(=)\\s*(\"[^\"]*\")",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.tyranoscript" },
+            "2": { "name": "keyword.operator.assignment.tyranoscript" },
+            "3": { "name": "string.quoted.double.tyranoscript" }
+          }
+        },
+        {
+          "comment": "name=value 形式（クォートなし）",
+          "match": "([a-zA-Z_]\\w*)\\s*(=)\\s*([^\\s\\]\"]+)",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.tyranoscript" },
+            "2": { "name": "keyword.operator.assignment.tyranoscript" },
+            "3": { "name": "string.unquoted.tyranoscript" }
+          }
+        },
+        {
+          "comment": "値なし属性",
+          "name": "entity.other.attribute-name.tyranoscript",
+          "match": "[a-zA-Z_]\\w*"
+        }
+      ]
     }
+
   }
 }
