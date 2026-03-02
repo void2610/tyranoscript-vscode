@@ -30,7 +30,7 @@
     },
 
     "script-block": {
-      "comment": "VSCode標準HTMLグラマーの<script>ブロックと同じ構造：内側ルールで name:source.js をスタックに追加する",
+      "comment": "contentName: source.js でスコープスタックに source.js を追加する（meta.embedded を使わず灰色化を回避）",
       "begin": "\\[iscript[\\]]",
       "end": "^\\s*\\[endscript[\\]]\\s*$",
       "beginCaptures": {
@@ -39,16 +39,9 @@
       "endCaptures": {
         "0": { "name": "keyword.control.tyranoscript" }
       },
+      "contentName": "source.js",
       "patterns": [
-        {
-          "comment": "contentName を使わず直接 source.js を name に設定: meta.embedded スコープによるテーマ上書きを回避する",
-          "begin": "\\G",
-          "end": "^(?=\\s*\\[endscript)",
-          "name": "source.js",
-          "patterns": [
-            { "include": "source.js" }
-          ]
-        }
+        { "include": "source.js" }
       ]
     },
 
