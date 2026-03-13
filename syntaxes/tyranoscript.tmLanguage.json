@@ -31,13 +31,17 @@
 
     "script-block": {
       "comment": "contentName: source.js でスコープスタックに source.js を追加する（meta.embedded を使わず灰色化を回避）",
-      "begin": "\\[iscript[\\]]",
-      "end": "^\\s*\\[endscript[\\]]\\s*$",
+      "begin": "(\\[)(iscript)(\\])",
+      "end": "^\\s*(\\[)(endscript)(\\])\\s*$",
       "beginCaptures": {
-        "0": { "name": "keyword.control.tyranoscript" }
+        "1": { "name": "punctuation.definition.tag.begin.tyranoscript" },
+        "2": { "name": "keyword.control.tyranoscript" },
+        "3": { "name": "punctuation.definition.tag.end.tyranoscript" }
       },
       "endCaptures": {
-        "0": { "name": "keyword.control.tyranoscript" }
+        "1": { "name": "punctuation.definition.tag.begin.tyranoscript" },
+        "2": { "name": "keyword.control.tyranoscript" },
+        "3": { "name": "punctuation.definition.tag.end.tyranoscript" }
       },
       "contentName": "source.js",
       "patterns": [
